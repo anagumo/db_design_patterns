@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashViewController" customModule="DBDesignPatterns" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicatorView" destination="405-0t-CjW" id="SLP-O1-Hkq"/>
+                <outlet property="view" destination="iN0-l3-epB" id="75g-jn-JFB"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonball" translatesAutoresizingMaskIntoConstraints="NO" id="Oky-tc-kb4">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                </imageView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="405-0t-CjW">
+                    <rect key="frame" x="178" y="407.66666666666669" width="37" height="37"/>
+                </activityIndicatorView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="405-0t-CjW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="67e-CG-4N2"/>
+                <constraint firstAttribute="trailing" secondItem="Oky-tc-kb4" secondAttribute="trailing" id="DqU-tP-Ca5"/>
+                <constraint firstItem="Oky-tc-kb4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="FGK-SJ-PFl"/>
+                <constraint firstItem="405-0t-CjW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="S02-i1-ZJa"/>
+                <constraint firstAttribute="bottom" secondItem="Oky-tc-kb4" secondAttribute="bottom" id="Uyu-lZ-1yZ"/>
+                <constraint firstItem="Oky-tc-kb4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="veC-rs-gtZ"/>
+            </constraints>
+            <point key="canvasLocation" x="131" y="-11"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="dragonball" width="507" height="900"/>
+    </resources>
+</document>
