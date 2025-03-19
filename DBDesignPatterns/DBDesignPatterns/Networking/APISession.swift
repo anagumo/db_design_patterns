@@ -17,7 +17,7 @@ struct APISession: APISessionContract {
                 }
                 
                 guard let httpResponse = response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200
+                      httpResponse.statusCode == 200 || httpResponse.statusCode == 201
                 else {
                     completion(.failure(APIErrorResponse.network(apiRequest.path)))
                     return
