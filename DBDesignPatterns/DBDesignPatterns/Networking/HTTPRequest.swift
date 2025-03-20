@@ -68,10 +68,6 @@ extension HTTPRequest {
                     completion(.success(() as! Response))
                 } else if Response.self == Data.self {
                     completion(.success(data as! Response))
-                } else if Response.self == String.self {
-                    // Since JSONDecoder does not support plain strings is necessary add this validation for jwt case
-                    let decodedString = String(data: data, encoding: .utf8)
-                    return completion(.success(decodedString as! Response))
                 } else {
                     let decodedResponse = try JSONDecoder().decode(Response.self, from: data)
                     return completion(.success(decodedResponse))

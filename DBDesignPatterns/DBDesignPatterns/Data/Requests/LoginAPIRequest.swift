@@ -1,7 +1,7 @@
 import Foundation
 
-struct LoginRequest: HTTPRequest {
-    typealias Response = String
+struct LoginAPIRequest: HTTPRequest {
+    typealias Response = Data
     let method: Method = .POST
     let path: String = "/api/auth/login"
     var headers: [String : String]

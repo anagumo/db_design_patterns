@@ -16,14 +16,17 @@ struct APISession: APISessionContract {
                     completion(.failure(error))
                 }
                 
-                guard let httpResponse = response as? HTTPURLResponse,
-                      httpResponse.statusCode == 200 || httpResponse.statusCode == 201
-                else {
+                guard let httpResponse = response as? HTTPURLResponse else {
                     completion(.failure(APIErrorResponse.network(apiRequest.path)))
                     return
                 }
                 
-                completion(.success(data ?? Data()))
+                switch httpResponse.statusCode {
+                case 200..<30:
+                    completion(.success(data ?? Data()))
+                default:
+                    completion(.failure(APIErrorResponse.network(apiRequest.path)))
+                }
             }.resume()
         } catch {
             completion(.failure(error))
