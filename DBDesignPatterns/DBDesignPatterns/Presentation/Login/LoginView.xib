@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="DBDesignPatterns" customModuleProvider="target">
+            <connections>
+                <outlet property="errorLabel" destination="cTw-Gx-FTM" id="MRH-6H-LmJ"/>
+                <outlet property="loginButton" destination="N2G-HP-Kd6" id="BSX-k8-VPU"/>
+                <outlet property="passwordTextField" destination="CJb-QE-qCW" id="uFH-Y7-Zq7"/>
+                <outlet property="usernameTexField" destination="zKZ-QM-8UX" id="abC-Jk-jl9"/>
+                <outlet property="view" destination="iN0-l3-epB" id="DCA-r6-9vB"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dragonball" translatesAutoresizingMaskIntoConstraints="NO" id="Oni-Zr-5RP" userLabel="DB Image View">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="WoR-v3-QjQ" userLabel="Content Stack View">
+                    <rect key="frame" x="26.666666666666657" y="271.33333333333337" width="340" height="309.33333333333337"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tOl-Tr-ftu" userLabel="Title Stack View">
+                            <rect key="frame" x="0.0" y="0.0" width="340" height="121.33333333333333"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Dragon Ball" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prL-ue-sph">
+                                    <rect key="frame" x="0.0" y="0.0" width="340" height="76.666666666666671"/>
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="32"/>
+                                    <color key="textColor" name="DBBlack"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Character exibithion every week. Login bellow to get started and have fun." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z2T-f2-4Mj">
+                                    <rect key="frame" x="0.0" y="80.666666666666686" width="340" height="40.666666666666657"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                    <color key="textColor" name="DBBlack"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BUj-Ta-gzd" userLabel="Credentials Stack View">
+                            <rect key="frame" x="0.0" y="145.33333333333337" width="340" height="96"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="user@example.es" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zKZ-QM-8UX">
+                                    <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="pHT-Qx-Voo"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                                </textField>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CJb-QE-qCW">
+                                    <rect key="frame" x="0.0" y="52" width="340" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="B5O-Yl-hYw"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
+                                </textField>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="UwY-mF-Cng" userLabel="Login Stack View">
+                            <rect key="frame" x="0.0" y="265.33333333333331" width="340" height="44"/>
+                            <subviews>
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTw-Gx-FTM" userLabel="Error Label">
+                                    <rect key="frame" x="0.0" y="0.0" width="340" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                    <color key="textColor" systemColor="systemRedColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N2G-HP-Kd6" userLabel="Login Button">
+                                    <rect key="frame" x="0.0" y="0.0" width="340" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="DTW-6o-cSh"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="filled" title="Login" cornerStyle="capsule">
+                                        <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <color key="baseBackgroundColor" name="DBBlack"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="onLoginButtonTapped:" destination="-1" eventType="touchUpInside" id="bfR-dO-cTl"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="340" id="c6x-Yf-3kB"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="WoR-v3-QjQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="750" constant="24" id="9Al-W0-fmg"/>
+                <constraint firstItem="Oni-Zr-5RP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AUJ-VG-1Af"/>
+                <constraint firstItem="WoR-v3-QjQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="S15-Gf-Ok7"/>
+                <constraint firstItem="Oni-Zr-5RP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VR8-Lo-y5W"/>
+                <constraint firstItem="WoR-v3-QjQ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="dra-YO-bih"/>
+                <constraint firstAttribute="trailing" secondItem="Oni-Zr-5RP" secondAttribute="trailing" id="q1p-Bt-n7T"/>
+                <constraint firstAttribute="bottom" secondItem="Oni-Zr-5RP" secondAttribute="bottom" id="wt8-dA-bKv"/>
+                <constraint firstItem="WoR-v3-QjQ" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="trailing" priority="750" constant="24" id="x4R-Q0-fCR"/>
+            </constraints>
+            <point key="canvasLocation" x="25" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="dragonball" width="507" height="900"/>
+        <namedColor name="DBBlack">
+            <color red="0.17254901960784313" green="0.16862745098039217" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
