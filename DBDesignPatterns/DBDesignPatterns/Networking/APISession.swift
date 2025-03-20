@@ -6,11 +6,18 @@ protocol APISessionContract {
 
 struct APISession: APISessionContract {
     static let shared = APISession()
-    private let session = URLSession(configuration: .default)
+    private let session: URLSession
+    private let interceptors: [APIInterceptor]
+    
+    init(interceptors: [APIInterceptor] = [APIInterceptor()]) {
+        self.session = URLSession(configuration: .default)
+        self.interceptors = interceptors
+    }
     
     func request<Response: HTTPRequest>(apiRequest: Response, completion: @escaping (Result<Data, any Error>) -> Void) {
         do {
-            let request = try apiRequest.getRequest()
+            var request = try apiRequest.getRequest()
+            interceptors.forEach { $0.intercept(&request) }
             session.dataTask(with: request) { data, response, error in
                 if let error {
                     completion(.failure(error))
