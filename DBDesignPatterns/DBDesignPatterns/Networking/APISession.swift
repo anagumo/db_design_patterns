@@ -29,7 +29,7 @@ struct APISession: APISessionContract {
                 }
                 
                 switch httpResponse.statusCode {
-                case 200..<30:
+                case 200..<300:
                     completion(.success(data ?? Data()))
                 default:
                     completion(.failure(APIErrorResponse.network(apiRequest.path)))
