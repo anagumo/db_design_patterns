@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents a domain model
-struct Hero: Equatable, Hashable {
+struct HeroModel: Equatable, Hashable {
     let identifier: String
     let name: String
     let description: String
@@ -9,7 +9,7 @@ struct Hero: Equatable, Hashable {
     let photo: String
 }
 
-extension Hero {
+extension HeroModel {
     
     func getFavoriteImage() -> String {
         favorite ? "heart.fill" : "heart"

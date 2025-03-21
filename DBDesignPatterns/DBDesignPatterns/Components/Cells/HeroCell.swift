@@ -7,7 +7,7 @@ final class HeroCell: UICollectionViewCell {
     @IBOutlet weak var favoriteImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
-    func setData(_ hero: Hero) {
+    func setData(_ hero: HeroModel) {
         favoriteImageView.image = UIImage(systemName: (hero.getFavoriteImage()))
         favoriteImageView.tintColor = .dbOrange
         photoAsyncImage.layer.backgroundColor = UIColor.systemGray6.cgColor

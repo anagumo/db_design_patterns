@@ -13,8 +13,8 @@ final class HomeViewController: UIViewController {
     @IBOutlet weak private var errorLabel: UILabel!
     
     // MARK: DataSource
-    typealias DataSource = UICollectionViewDiffableDataSource<HerosSection, Hero>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<HerosSection, Hero>
+    typealias DataSource = UICollectionViewDiffableDataSource<HerosSection, HeroModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<HerosSection, HeroModel>
     private var dataSource: DataSource?
     
     // MARK: - View Model
@@ -40,7 +40,7 @@ final class HomeViewController: UIViewController {
     // MARK: CollectionView Configuration
     private func configureCollectionView() {
         let herosNib = UINib(nibName: HeroCell.identifier, bundle: Bundle(for: type(of: self)))
-        let registration = UICollectionView.CellRegistration<HeroCell, Hero>(cellNib: herosNib) { cell, indexPath, hero in
+        let registration = UICollectionView.CellRegistration<HeroCell, HeroModel>(cellNib: herosNib) { cell, indexPath, hero in
             cell.setData(hero)
         }
         
@@ -55,7 +55,7 @@ final class HomeViewController: UIViewController {
         collectionView.delegate = self
     }
     
-    private func applySnapshot(heros: [Hero]) {
+    private func applySnapshot(heros: [HeroModel]) {
         var snapshot = Snapshot()
         snapshot.appendSections([.heros])
         snapshot.appendItems(heros)
@@ -88,7 +88,7 @@ final class HomeViewController: UIViewController {
         errorStackView.isHidden = true
     }
     
-    private func renderSuccess(_ heros: [Hero]) {
+    private func renderSuccess(_ heros: [HeroModel]) {
         activityIndicatorView.stopAnimating()
         collectionView.isHidden = false
         Logger.debug.log("Heros list has \(heros.count) items")

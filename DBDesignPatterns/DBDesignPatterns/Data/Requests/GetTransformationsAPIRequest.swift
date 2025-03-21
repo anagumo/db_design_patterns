@@ -6,7 +6,7 @@ struct GetTransformationsAPIRequest: HTTPRequest {
     var path: String = "/api/heros/tranformations"
     var body: Encodable?
     
-    init(hero: Hero?) {
+    init(hero: HeroModel?) {
         body = hero.map {
             RequestDTO(id: $0.identifier)
         }

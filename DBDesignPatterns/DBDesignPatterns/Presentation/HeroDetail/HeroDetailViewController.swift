@@ -65,7 +65,7 @@ class HeroDetailViewController: UIViewController {
         errorStackView.isHidden = true
     }
     
-    private func renderSuccess(_ hero: Hero) {
+    private func renderSuccess(_ hero: HeroModel) {
         activityIndicatorView.stopAnimating()
         contentStackView.isHidden = false
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: hero.getFavoriteImage())

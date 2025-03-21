@@ -1,12 +1,12 @@
 import Foundation
 
 protocol GetHerosUseCaseProtocol {
-    func run(completion: @escaping (Result<[Hero], Error>) -> Void)
+    func run(completion: @escaping (Result<[HeroModel], Error>) -> Void)
 }
 
 final class GetHerosUseCase: GetHerosUseCaseProtocol {
     
-    func run(completion: @escaping (Result<[Hero], any Error>) -> Void) {
+    func run(completion: @escaping (Result<[HeroModel], any Error>) -> Void) {
         GetHerosAPIRequest().perform { result in
             do {
                 let decodedHeros = try result.get()

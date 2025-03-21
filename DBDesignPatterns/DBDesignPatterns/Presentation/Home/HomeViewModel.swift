@@ -2,7 +2,7 @@ import Foundation
 
 enum HomeStates: Equatable {
     case loading
-    case success([Hero])
+    case success([HeroModel])
     case error(String)
 }
 

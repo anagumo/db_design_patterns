@@ -1,6 +1,6 @@
 final class HeroDTOToHeroModelMapper {
-    func map(_ dto: HeroDTO) -> Hero {
-        Hero(identifier: dto.identifier,
+    func map(_ dto: HeroDTO) -> HeroModel {
+        HeroModel(identifier: dto.identifier,
              name: dto.name,
              description: dto.description,
              favorite: dto.favorite,
