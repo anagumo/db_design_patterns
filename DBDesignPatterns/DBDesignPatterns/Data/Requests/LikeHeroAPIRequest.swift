@@ -1,6 +1,6 @@
 import Foundation
 
-struct FavoriteAPIRequest: HTTPRequest {
+struct LikeHeroAPIRequest: HTTPRequest {
     typealias Response = Data
     var method: Method = .POST
     var path: String = "/api/data/herolike"
@@ -8,13 +8,13 @@ struct FavoriteAPIRequest: HTTPRequest {
     
     init(hero: Hero?) {
         body = hero.map {
-            FavoriteDTO(hero: $0.identifier)
+            RequestDTO(hero: $0.identifier)
         }
     }
 }
 
-extension FavoriteAPIRequest {
-    struct FavoriteDTO: Encodable {
+extension LikeHeroAPIRequest {
+    struct RequestDTO: Encodable {
         let hero: String
     }
 }

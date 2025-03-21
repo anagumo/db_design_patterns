@@ -2,19 +2,19 @@ import Foundation
 import Security
 
 struct GetHerosAPIRequest: HTTPRequest {
-    typealias Response = [HeroEntity]
+    typealias Response = [HeroDTO]
     
     var method: Method = .POST
     var path: String = "/api/heros/all"
     var body: Encodable?
     
     init(name: String = "") {
-        body = HeroDTO(name: name)
+        body = RequestDTO(name: name)
     }
 }
 
 extension GetHerosAPIRequest {
-    struct HeroDTO: Encodable {
+    struct RequestDTO: Encodable {
         let name: String
     }
 }
