@@ -6,10 +6,8 @@ struct LikeHeroAPIRequest: HTTPRequest {
     var path: String = "/api/data/herolike"
     var body: Encodable?
     
-    init(hero: HeroModel?) {
-        body = hero.map {
-            RequestDTO(hero: $0.identifier)
-        }
+    init(identifier: String) {
+        body = RequestDTO(hero: identifier)
     }
 }
 

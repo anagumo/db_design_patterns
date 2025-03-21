@@ -6,7 +6,7 @@ protocol GetHeroUseCaseProtocol {
 
 final class GetHeroUseCase: GetHeroUseCaseProtocol {
     
-    func run(name: String, completion: @escaping (Result<HeroModel, any Error>) -> Void) {
+    func run(name: String, completion: @escaping (Result<HeroModel, Error>) -> Void) {
         GetHerosAPIRequest(name: name).perform { result in
             do {
                 let decodedHero = try result.get().first

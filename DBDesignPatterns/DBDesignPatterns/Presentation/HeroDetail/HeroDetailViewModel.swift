@@ -3,7 +3,8 @@ import Foundation
 enum HeroDetailState: Equatable {
     case loading
     case success(HeroModel)
-    case error(String)
+    case liked
+    case error(firstCharge: Bool, String)
 }
 
 protocol HeroDetailViewModelProtocol {
@@ -12,10 +13,13 @@ protocol HeroDetailViewModelProtocol {
 
 final class HeroDetailViewModel: HeroDetailViewModelProtocol {
     let onStateChanged = Binding<HeroDetailState>()
-    let useCase: GetHeroUseCase
+    private let useCase: GetHeroUseCase
+    private let likeHeroUseCase: LikeHeroUseCase
+    private var hero: HeroModel?
     
-    init(useCase: GetHeroUseCase) {
+    init(useCase: GetHeroUseCase, likeHeroUseCase: LikeHeroUseCase) {
         self.useCase = useCase
+        self.likeHeroUseCase = likeHeroUseCase
     }
     
     func loadHero(name: String) {
@@ -23,11 +27,28 @@ final class HeroDetailViewModel: HeroDetailViewModelProtocol {
         useCase.run(name: name) { [weak self] result in
             do {
                 let hero = try result.get()
+                self?.hero = hero
                 self?.onStateChanged.update(.success(hero))
             } catch let error as HeroError {
-                self?.onStateChanged.update(.error(error.reason))
+                self?.onStateChanged.update(.error(firstCharge: true, error.reason))
             } catch {
-                self?.onStateChanged.update(.error(error.localizedDescription))
+                self?.onStateChanged.update(.error(firstCharge: true, error.localizedDescription))
+            }
+        }
+    }
+    
+    func likeHero() {
+        guard let hero, !hero.favorite else {
+            onStateChanged.update(.error(firstCharge: false, "You have already liked this hero"))
+            return
+        }
+        
+        likeHeroUseCase.run(identifier: hero.identifier) { [weak self] result in
+            do {
+                let _ = try result.get()
+                self?.onStateChanged.update(.liked)
+            } catch {
+                self?.onStateChanged.update(.error(firstCharge: false, "There was an error marking as liked"))
             }
         }
     }

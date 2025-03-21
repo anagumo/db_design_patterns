@@ -5,7 +5,7 @@ struct HeroModel: Equatable, Hashable {
     let identifier: String
     let name: String
     let description: String
-    let favorite: Bool
+    var favorite: Bool
     let photo: String
 }
 

@@ -37,11 +37,7 @@ class HeroDetailViewController: UIViewController {
     }
     
     @objc func favoriteBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        // TODO: Create Hero Like Use Case
-        present(
-            AlertBuilder().build(title: "Unavailable Feature", message: "Call to /api/data/herolike in Postman to render state"),
-            animated: true
-        )
+        viewModel.likeHero()
     }
     
     // MARK: - Binding
@@ -52,8 +48,10 @@ class HeroDetailViewController: UIViewController {
                 self?.renderLoading()
             case let .success(hero):
                 self?.renderSuccess(hero)
-            case let .error(errorMessage):
-                self?.renderError(errorMessage)
+            case .liked:
+                self?.renderLiked()
+            case let .error(firstCharge, errorMessage):
+                self?.renderError(errorMessage, firstCharge)
             }
         }
     }
@@ -74,9 +72,20 @@ class HeroDetailViewController: UIViewController {
         descriptionLabel.text = hero.description
     }
     
-    private func renderError(_ errorMessage: String) {
-        activityIndicatorView.stopAnimating()
-        errorStackView.isHidden = false
+    private func renderLiked() {
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+    }
+    
+    private func renderError(_ errorMessage: String, _ firstCharge: Bool) {
+        if firstCharge {
+            activityIndicatorView.stopAnimating()
+            errorStackView.isHidden = false
+        } else {
+            present(
+                AlertBuilder().build(title: "Error", message: errorMessage),
+                animated: true
+            )
+        }
     }
 }
 
