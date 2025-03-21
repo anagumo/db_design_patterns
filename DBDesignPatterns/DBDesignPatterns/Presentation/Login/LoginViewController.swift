@@ -60,6 +60,7 @@ final class LoginViewController: UIViewController {
     
     private func renderSuccess() {
         loginButton.configuration?.showsActivityIndicator = false
+        navigationController?.setViewControllers([HomeBuilder().build()], animated: true)
     }
     
     private func renderError(_ loginError: LoginError) {
