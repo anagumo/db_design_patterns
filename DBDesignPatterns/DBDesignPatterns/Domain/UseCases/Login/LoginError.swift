@@ -21,8 +21,8 @@ extension LoginError {
     /// Describes a network error in the api client
     /// - Parameter error: an object of type (`APIErrorResponse`) that represents an api error
     /// - Returns: an object of type (`LoginError`) that encapsulate an error message
-    static func network(_ error: APIErrorResponse) -> LoginError {
-        LoginError(reason: error.message)
+    static func network(_ errorMessage: String) -> LoginError {
+        LoginError(reason: errorMessage)
     }
     
     /// Describes an unknow login error

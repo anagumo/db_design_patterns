@@ -34,19 +34,19 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="xTj-1M-pcz" userLabel="Error Stack View">
-                    <rect key="frame" x="64" y="430" width="312" height="96"/>
+                    <rect key="frame" x="24" y="430" width="392" height="96"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pca-br-xS8" userLabel="Content Stack View">
-                            <rect key="frame" x="0.0" y="0.0" width="312" height="28"/>
+                            <rect key="frame" x="0.0" y="0.0" width="392" height="28"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops! Something went wrong." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0j-91-OzH" userLabel="Title Label">
-                                    <rect key="frame" x="0.0" y="0.0" width="312" height="24"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="392" height="24"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <color key="textColor" name="DBBlack"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHu-Gq-gqJ" userLabel="Description Label">
-                                    <rect key="frame" x="0.0" y="28" width="312" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="28" width="392" height="0.0"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" name="DBBlack"/>
                                     <nil key="highlightedColor"/>
@@ -54,10 +54,10 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rxh-BJ-cWd" userLabel="Try Again Stack View">
-                            <rect key="frame" x="0.0" y="52" width="312" height="44"/>
+                            <rect key="frame" x="0.0" y="52" width="392" height="44"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zc-PJ-z5h" userLabel="Try again Button">
-                                    <rect key="frame" x="109.33333333333334" y="0.0" width="93.666666666666657" height="44"/>
+                                    <rect key="frame" x="137.33333333333334" y="0.0" width="117.33333333333334" height="44"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="44" id="Ecu-hZ-oRu"/>
                                     </constraints>
@@ -92,7 +92,7 @@
                 <constraint firstItem="UQM-zb-66Y" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="9rW-8r-Md4"/>
                 <constraint firstItem="UQM-zb-66Y" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Czu-dR-Xvb"/>
                 <constraint firstItem="lUL-UD-3FM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="GpS-9g-ZFa"/>
-                <constraint firstItem="xTj-1M-pcz" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="trailing" priority="750" constant="-24" id="LVB-u1-phe"/>
+                <constraint firstItem="xTj-1M-pcz" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="trailing" priority="750" constant="24" id="LVB-u1-phe"/>
                 <constraint firstItem="xTj-1M-pcz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="750" constant="24" id="R3d-pp-4q9"/>
                 <constraint firstItem="UQM-zb-66Y" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="S8c-K7-Br6"/>
                 <constraint firstItem="xTj-1M-pcz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Z7N-Q8-wq5"/>

@@ -113,4 +113,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
         let itemWidth = (collectionView.frame.size.width - 32) / numberCollumn
         return CGSize(width: itemWidth, height: 220)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let hero = dataSource?.itemIdentifier(for: indexPath) else {
+            Logger.debug.error("Hero for \(indexPath) index path not found")
+            return
+        }
+        // Show the screen without interacting with the view model since it does not require data
+        // Also, the GetHerosAPIRequest for this hero is a responsibility of the HeroDetailViewModel
+        show(HeroDetailBuilder().build(name: hero.name), sender: self)
+    }
 }
