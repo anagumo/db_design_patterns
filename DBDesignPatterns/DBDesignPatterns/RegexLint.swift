@@ -14,8 +14,34 @@ struct RegexLint {
     static func validate(data: String, matchWith regexPattern: RegexPattern) throws -> String {
         let regex = try Regex(regexPattern.rawValue)
         guard data.contains(regex) else {
-            throw LoginError(from: regexPattern)
+            throw RegexLintError(from: regexPattern)
         }
         return data
+    }
+}
+
+/// Represents a Regex error
+enum RegexLintError: Error, LocalizedError {
+    case email
+    case password
+    
+    /// Constructor  to initialize an error from the RegexLint
+    init(from regex: RegexPattern) {
+        switch regex {
+        case .email:
+            self = .email
+        case .password:
+            self = .password
+        }
+    }
+    
+    /// A localized message describing what error occurred
+    var errorDescription: String? {
+        switch self {
+        case .email:
+            "Email format is invalid"
+        case .password:
+            "The password must have at least 8 characters"
+        }
     }
 }

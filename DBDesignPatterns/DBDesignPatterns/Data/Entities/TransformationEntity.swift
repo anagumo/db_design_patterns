@@ -1,3 +1,4 @@
+/// Represents an API entity
 struct TransformationEntity: Decodable {
     let identifier: String
     let name: String

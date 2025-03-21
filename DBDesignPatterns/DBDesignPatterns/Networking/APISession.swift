@@ -31,8 +31,10 @@ struct APISession: APISessionContract {
                 switch httpResponse.statusCode {
                 case 200..<300:
                     completion(.success(data ?? Data()))
+                case 401:
+                    completion(.failure(APIErrorResponse.unauthorized(apiRequest.path)))
                 default:
-                    completion(.failure(APIErrorResponse.network(apiRequest.path)))
+                    completion(.failure(APIErrorResponse.unknown(apiRequest.path)))
                 }
             }.resume()
         } catch {

@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EB743837-AE68-493E-A4D5-7FE7161C4296"
-            shouldBeEnabled = "Yes"
+            uuid = "E5062FD0-BFAC-4714-B5E4-926B44B3729A"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DBDesignPatterns/Presentation/Login/LoginViewModel.swift"
+            filePath = "DBDesignPatterns/Domain/UseCases/Login/LoginUseCase.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "login(username:password:)"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "run(username:password:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

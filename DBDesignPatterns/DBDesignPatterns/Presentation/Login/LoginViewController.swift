@@ -1,9 +1,11 @@
 import UIKit
 
 final class LoginViewController: UIViewController {
+    // MARK: UI Components
     @IBOutlet private weak var usernameTexField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
-    @IBOutlet private weak var errorLabel: UILabel!
+    @IBOutlet weak var usernameErrorLabel: UILabel!
+    @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     
     private let loginViewModel: LoginViewModel
@@ -23,6 +25,11 @@ final class LoginViewController: UIViewController {
         bind()
     }
     
+    // Add functionality to handle user interaction and hide the keyboard.
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     // MARK: UI Operations
     @IBAction func onLoginButtonTapped(_ sender: UIButton) {
         loginViewModel.login(
@@ -39,24 +46,51 @@ final class LoginViewController: UIViewController {
                 self?.renderLoading()
             case .success:
                 self?.renderSuccess()
-            case .error(message: let message):
-                self?.renderError(message)
+            case let .error(loginError):
+                self?.renderError(loginError)
             }
         }
     }
     
     private func renderLoading() {
         loginButton.configuration?.showsActivityIndicator = true
-        errorLabel.isHidden = true
+        usernameErrorLabel.isHidden = true
+        passwordErrorLabel.isHidden = true
     }
     
     private func renderSuccess() {
         loginButton.configuration?.showsActivityIndicator = false
     }
     
-    private func renderError(_ message: String) {
+    private func renderError(_ loginError: LoginError) {
         loginButton.configuration?.showsActivityIndicator = false
-        errorLabel.isHidden = false
-        errorLabel.text = message
+        
+        switch loginError.regex {
+        case .email:
+            usernameErrorLabel.isHidden = false
+            usernameErrorLabel.text = loginError.regex?.errorDescription
+        case .password:
+            passwordErrorLabel.isHidden = false
+            passwordErrorLabel.text = loginError.regex?.errorDescription
+        default:
+            // Display an alert when the error is not related to any text field
+            renderAlert(error: loginError.reason)
+        }
+    }
+    
+    private func renderAlert(error: String) {
+        let uiAlertController = UIAlertController(
+            title: "Error",
+            message: error,
+            preferredStyle: .alert)
+        
+        uiAlertController.addAction(
+            UIAlertAction(
+                title: "OK",
+                style: .default
+            )
+        )
+        
+        present(uiAlertController, animated: true)
     }
 }

@@ -3,7 +3,7 @@ import Foundation
 enum LoginState: Equatable {
     case loading
     case success
-    case error(message: String)
+    case error(LoginError)
 }
 
 protocol LoginViewModelProtocol {
@@ -25,7 +25,7 @@ final class LoginViewModel: LoginViewModelProtocol {
             case .success:
                 self?.onStateChanged.update(.success)
             case .failure(let failure):
-                self?.onStateChanged.update(.error(message: failure.reason))
+                self?.onStateChanged.update(.error(failure))
             }
         }
     }
