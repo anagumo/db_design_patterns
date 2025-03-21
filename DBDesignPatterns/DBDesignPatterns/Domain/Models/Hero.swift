@@ -1,7 +1,7 @@
 import Foundation
 
 /// Represents a domain model
-struct Hero {
+struct Hero: Equatable {
     let identifier: String
     let name: String
     let description: String

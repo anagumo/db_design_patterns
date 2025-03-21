@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="activityIndicatorView" destination="lUL-UD-3FM" id="tQN-U7-8Ly"/>
                 <outlet property="collectionView" destination="UQM-zb-66Y" id="mDH-ij-3Wp"/>
+                <outlet property="errorLabel" destination="oHu-Gq-gqJ" id="X9I-eQ-4Q5"/>
                 <outlet property="errorStackView" destination="xTj-1M-pcz" id="pST-VD-G4S"/>
                 <outlet property="view" destination="iN0-l3-epB" id="VaB-DS-enA"/>
             </connections>

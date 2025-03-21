@@ -1,10 +1,12 @@
 import UIKit
+import OSLog
 
 final class HomeViewController: UIViewController {
     // MARK: - UI Components
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var errorStackView: UIStackView!
     @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak private var errorLabel: UILabel!
     
     // MARK: - View Model
     private let viewModel: HomeViewModel
@@ -27,6 +29,7 @@ final class HomeViewController: UIViewController {
     
     // MARK: - UI Operations
     @IBAction func onTryAgainTapped(_ sender: UIButton) {
+        Logger.debug.log("On try again tapped")
         viewModel.loadHeros()
     }
     
@@ -36,10 +39,10 @@ final class HomeViewController: UIViewController {
             switch state {
             case .loading:
                 self?.renderLoading()
-            case .success:
-                self?.renderSuccess()
-            case .error:
-                self?.renderError()
+            case let .success(heros):
+                self?.renderSuccess(heros)
+            case let .error(message):
+                self?.renderError(message)
             }
         }
     }
@@ -50,13 +53,16 @@ final class HomeViewController: UIViewController {
         errorStackView.isHidden = true
     }
     
-    private func renderSuccess() {
+    private func renderSuccess(_ heros: [Hero]) {
         activityIndicatorView.stopAnimating()
         collectionView.isHidden = false
+        Logger.debug.log("\(heros.debugDescription)")
     }
     
-    private func renderError() {
+    private func renderError(_ message: String) {
         activityIndicatorView.stopAnimating()
         errorStackView.isHidden = false
+        Logger.debug.error("\(message)")
+        errorLabel.text = message
     }
 }

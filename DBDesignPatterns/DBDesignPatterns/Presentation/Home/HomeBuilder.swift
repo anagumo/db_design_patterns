@@ -2,7 +2,8 @@ import UIKit
 
 final class HomeBuilder {
     func build() -> UIViewController {
-        let viewModel = HomeViewModel()
+        let useCase = GetHerosUseCase()
+        let viewModel = HomeViewModel(useCase: useCase)
         let controller = HomeViewController(viewModel: viewModel)
         return controller
     }
