@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,21 +11,101 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController" customModule="DBDesignPatterns" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicatorView" destination="lUL-UD-3FM" id="tQN-U7-8Ly"/>
+                <outlet property="collectionView" destination="UQM-zb-66Y" id="mDH-ij-3Wp"/>
+                <outlet property="errorStackView" destination="xTj-1M-pcz" id="pST-VD-G4S"/>
                 <outlet property="view" destination="iN0-l3-epB" id="VaB-DS-enA"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <rect key="frame" x="0.0" y="0.0" width="440" height="956"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UQM-zb-66Y">
+                    <rect key="frame" x="0.0" y="62" width="440" height="860"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="45B-0J-keq">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="xTj-1M-pcz" userLabel="Error Stack View">
+                    <rect key="frame" x="64" y="430" width="312" height="96"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pca-br-xS8" userLabel="Content Stack View">
+                            <rect key="frame" x="0.0" y="0.0" width="312" height="28"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oops! Something went wrong." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X0j-91-OzH" userLabel="Title Label">
+                                    <rect key="frame" x="0.0" y="0.0" width="312" height="24"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                    <color key="textColor" name="DBBlack"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oHu-Gq-gqJ" userLabel="Description Label">
+                                    <rect key="frame" x="0.0" y="28" width="312" height="0.0"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" name="DBBlack"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rxh-BJ-cWd" userLabel="Try Again Stack View">
+                            <rect key="frame" x="0.0" y="52" width="312" height="44"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6zc-PJ-z5h" userLabel="Try again Button">
+                                    <rect key="frame" x="109.33333333333334" y="0.0" width="93.666666666666657" height="44"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="44" id="Ecu-hZ-oRu"/>
+                                    </constraints>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="filled" title="Try again" cornerStyle="capsule">
+                                        <color key="baseBackgroundColor" name="DBBlack"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="onTryAgainTapped:" destination="-1" eventType="touchUpInside" id="YC0-A8-VQE"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="6zc-PJ-z5h" firstAttribute="width" secondItem="rxh-BJ-cWd" secondAttribute="width" multiplier="0.3" id="KQu-42-VXR"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" priority="999" constant="500" id="jdU-w0-IbO"/>
+                    </constraints>
+                </stackView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="lUL-UD-3FM">
+                    <rect key="frame" x="201.66666666666666" y="459.66666666666669" width="37" height="37"/>
+                    <color key="color" name="DBBlack"/>
+                </activityIndicatorView>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemIndigoColor"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="lUL-UD-3FM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="89i-Ko-1Cl"/>
+                <constraint firstItem="xTj-1M-pcz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="8ad-Eu-yB1"/>
+                <constraint firstItem="UQM-zb-66Y" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="9rW-8r-Md4"/>
+                <constraint firstItem="UQM-zb-66Y" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Czu-dR-Xvb"/>
+                <constraint firstItem="lUL-UD-3FM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="GpS-9g-ZFa"/>
+                <constraint firstItem="xTj-1M-pcz" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="trailing" priority="750" constant="-24" id="LVB-u1-phe"/>
+                <constraint firstItem="xTj-1M-pcz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vUN-kp-3ea" secondAttribute="leading" priority="750" constant="24" id="R3d-pp-4q9"/>
+                <constraint firstItem="UQM-zb-66Y" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="S8c-K7-Br6"/>
+                <constraint firstItem="xTj-1M-pcz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Z7N-Q8-wq5"/>
+                <constraint firstItem="UQM-zb-66Y" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="jhv-xP-h8B"/>
+            </constraints>
             <point key="canvasLocation" x="30" y="20"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="DBBlack">
+            <color red="0.17254901960784313" green="0.16862745098039217" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
