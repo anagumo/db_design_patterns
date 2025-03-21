@@ -75,23 +75,14 @@ final class LoginViewController: UIViewController {
             passwordErrorLabel.text = loginError.regex?.errorDescription
         default:
             // Display an alert when the error is not related to any text field
-            renderAlert(error: loginError.reason)
+            renderAlert(errorMessage: loginError.reason)
         }
     }
     
-    private func renderAlert(error: String) {
-        let uiAlertController = UIAlertController(
-            title: "Error",
-            message: error,
-            preferredStyle: .alert)
-        
-        uiAlertController.addAction(
-            UIAlertAction(
-                title: "OK",
-                style: .default
-            )
+    private func renderAlert(errorMessage: String) {
+        present(
+            AlertBuilder().build(title: "Error", message: errorMessage),
+            animated: true
         )
-        
-        present(uiAlertController, animated: true)
     }
 }
