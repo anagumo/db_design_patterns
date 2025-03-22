@@ -37,7 +37,7 @@ final class HomeViewController: UIViewController {
         viewModel.loadHeros()
     }
     
-    // MARK: CollectionView Configuration
+    // MARK: Collection View Configuration
     private func configureCollectionView() {
         let herosNib = UINib(nibName: HeroCell.identifier, bundle: Bundle(for: type(of: self)))
         let registration = UICollectionView.CellRegistration<HeroCell, HeroModel>(cellNib: herosNib) { cell, indexPath, hero in
@@ -45,6 +45,7 @@ final class HomeViewController: UIViewController {
         }
         
         dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, hero in
+            // Applying the Adapter design pattern to transform a a domain model to a cell
             collectionView.dequeueConfiguredReusableCell(
                 using: registration,
                 for: indexPath,
@@ -89,16 +90,16 @@ final class HomeViewController: UIViewController {
     }
     
     private func renderSuccess(_ heros: [HeroModel]) {
+        Logger.debug.log("Heros list has \(heros.count) items")
         activityIndicatorView.stopAnimating()
         collectionView.isHidden = false
-        Logger.debug.log("Heros list has \(heros.count) items")
         applySnapshot(heros: heros)
     }
     
     private func renderError(_ message: String) {
+        Logger.debug.error("\(message)")
         activityIndicatorView.stopAnimating()
         errorStackView.isHidden = false
-        Logger.debug.error("\(message)")
         errorLabel.text = message
     }
 }
@@ -120,7 +121,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
             return
         }
         // Show the screen without interacting with the view model since it does not require data
-        // Also, the GetHerosAPIRequest for this hero is a responsibility of the HeroDetailViewModel
+        // Also, according to the Single Responsaility principle the GET hero is going to be performed on Hero Detail
         show(HeroDetailBuilder().build(name: hero.name), sender: self)
     }
 }

@@ -1,5 +1,6 @@
 import Foundation
 
+/// Represents a state on the screen
 enum HomeStates: Equatable {
     case loading
     case success([HeroModel])
@@ -7,32 +8,28 @@ enum HomeStates: Equatable {
 }
 
 protocol HomeViewModelProtocol {
+    /// Implements a get hero list
     func loadHeros()
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
     let onStateChanged = Binding<HomeStates>()
-    let useCase: GetHerosUseCase
+    let getHerosUseCase: GetHerosUseCase
     
     init(useCase: GetHerosUseCase) {
-        self.useCase = useCase
+        self.getHerosUseCase = useCase
     }
     
     func loadHeros() {
         onStateChanged.update(.loading)
-        useCase.run { [weak self] result in
+        getHerosUseCase.run { [weak self] result in
             do {
                 let heros = try result.get()
-                // Validate first if the heros list is empty
-                guard !heros.isEmpty else {
-                    self?.onStateChanged.update(.error("Empty heros list"))
-                    return
-                }
                 self?.onStateChanged.update(.success(heros))
-            } catch let error as APIErrorResponse {
-                self?.onStateChanged.update(.error(error.message))
+            } catch let error as HeroError {
+                self?.onStateChanged.update(.error(error.reason))
             } catch {
-                self?.onStateChanged.update(.error("Uknown server error"))
+                self?.onStateChanged.update(.error(error.localizedDescription))
             }
         }
     }

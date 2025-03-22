@@ -1,4 +1,5 @@
 import UIKit
+import OSLog
 
 class HeroDetailViewController: UIViewController {
     // MARK: - UI Components
@@ -13,7 +14,7 @@ class HeroDetailViewController: UIViewController {
     private let viewModel: HeroDetailViewModel
     
     // MARK: - Lifecycle
-    /// name parameter represents the name of the hero and is requiered to render the detail
+    // name parameter is set in the init because is required to render this screen
     init(name: String, viewModel: HeroDetailViewModel) {
         self.name = name
         self.viewModel = viewModel
@@ -33,10 +34,12 @@ class HeroDetailViewController: UIViewController {
     
     // MARK: - UI Operations
     @IBAction func onTryAgainTapped(_ sender: UIButton) {
+        Logger.debug.log("On try again button tapped")
         viewModel.loadHero(name: name)
     }
     
-    @objc func favoriteBarButtonItemTapped(_ sender: UIBarButtonItem) {
+    @objc func likeBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        Logger.debug.log("On like bar button item tapped")
         viewModel.likeHero()
     }
     
@@ -48,8 +51,8 @@ class HeroDetailViewController: UIViewController {
                 self?.renderLoading()
             case let .success(hero):
                 self?.renderSuccess(hero)
-            case .liked:
-                self?.renderLiked()
+            case .like:
+                self?.renderLike()
             case let .error(firstCharge, errorMessage):
                 self?.renderError(errorMessage, firstCharge)
             }
@@ -72,11 +75,12 @@ class HeroDetailViewController: UIViewController {
         descriptionLabel.text = hero.description
     }
     
-    private func renderLiked() {
+    private func renderLike() {
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
     }
     
     private func renderError(_ errorMessage: String, _ firstCharge: Bool) {
+        Logger.debug.error("\(errorMessage)")
         if firstCharge {
             activityIndicatorView.stopAnimating()
             errorStackView.isHidden = false
@@ -97,7 +101,7 @@ extension HeroDetailViewController {
             image: UIImage(systemName: "heart"),
             style: .plain,
             target: self,
-            action: #selector(favoriteBarButtonItemTapped)
+            action: #selector(likeBarButtonItemTapped)
         )
         navigationItem.rightBarButtonItem?.isEnabled = false
     }

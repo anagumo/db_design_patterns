@@ -1,5 +1,6 @@
 import Foundation
 
+/// Represents a state on the screen
 enum LoginState: Equatable {
     case loading
     case success
@@ -7,12 +8,17 @@ enum LoginState: Equatable {
 }
 
 protocol LoginViewModelProtocol {
+    /// Implements a user authentication
+    /// - Parameters:
+    ///   - username: an object of type `(String)` that represents the email of the user
+    ///   - password: an object of type `(String)` that represents the password of the user
     func login(username: String?, password: String?)
 }
 
 final class LoginViewModel: LoginViewModelProtocol {
-    let loginUseCase: LoginUseCase
+    // Represents a bridge between view model and ui to notify events
     let onStateChanged = Binding<LoginState>()
+    private let loginUseCase: LoginUseCase
     
     init(loginUseCase: LoginUseCase) {
         self.loginUseCase = loginUseCase

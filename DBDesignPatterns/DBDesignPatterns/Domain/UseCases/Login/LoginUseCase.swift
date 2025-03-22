@@ -1,6 +1,11 @@
 import Foundation
 
 protocol LoginUseCaseProtocol {
+    /// Runs a user authentication
+    /// - Parameters:
+    ///   - username: an object of type `(String)` that represents the email of the user
+    ///   - password: an object of type `(String)` that represents the password of the user
+    ///   - completion: a clossure of type `(Result<Void, LoginError>) -> ())` that represents the data result and returns either void or an error
     func run(username: String?, password: String?, completion: @escaping (Result<Void, LoginError>) -> Void)
 }
 

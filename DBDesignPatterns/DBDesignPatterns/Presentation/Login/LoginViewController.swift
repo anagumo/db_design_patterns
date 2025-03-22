@@ -1,4 +1,5 @@
 import UIKit
+import OSLog
 
 final class LoginViewController: UIViewController {
     // MARK: UI Components
@@ -8,6 +9,7 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     
+    // MARK: - View Model
     private let loginViewModel: LoginViewModel
     
     // MARK: Lifecycle
@@ -16,6 +18,7 @@ final class LoginViewController: UIViewController {
         super.init(nibName: "LoginView", bundle: Bundle(for: type(of: self)))
     }
     
+    // Required because we added a custom init, but is not necessary initialize the controller from IB
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -25,13 +28,14 @@ final class LoginViewController: UIViewController {
         bind()
     }
     
+    // MARK: UI Operations
     // Add functionality to handle user interaction and hide the keyboard.
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
     
-    // MARK: UI Operations
     @IBAction func onLoginButtonTapped(_ sender: UIButton) {
+        Logger.debug.log("On login button tapped")
         loginViewModel.login(
             username: usernameTexField.text,
             password: passwordTextField.text
@@ -39,6 +43,7 @@ final class LoginViewController: UIViewController {
     }
     
     // MARK: Binding
+    /// Implements a listener of view model events and data binding
     private func bind() {
         loginViewModel.onStateChanged.bind { [weak self] state in
             switch state {
@@ -52,6 +57,7 @@ final class LoginViewController: UIViewController {
         }
     }
     
+    // MARK: - State Rendering
     private func renderLoading() {
         loginButton.configuration?.showsActivityIndicator = true
         usernameErrorLabel.isHidden = true
@@ -64,6 +70,7 @@ final class LoginViewController: UIViewController {
     }
     
     private func renderError(_ loginError: LoginError) {
+        Logger.debug.error("\(loginError.reason)")
         loginButton.configuration?.showsActivityIndicator = false
         
         switch loginError.regex {

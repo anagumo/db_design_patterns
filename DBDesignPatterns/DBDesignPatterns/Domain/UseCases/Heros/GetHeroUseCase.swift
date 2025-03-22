@@ -1,6 +1,10 @@
 import Foundation
 
 protocol GetHeroUseCaseProtocol {
+    /// Runs a get hero
+    /// - Parameters:
+    ///   - name: an object of type `(String)` that represents the hero name ej. Gohan :'( (missing in the server)
+    ///   - completion: a clossure of type `((Result<HeroModel, Error>) -> Void)` that represents the data result and returns either a hero model or an error
     func run(name: String, completion: @escaping (Result<HeroModel, Error>) -> Void)
 }
 
@@ -14,6 +18,7 @@ final class GetHeroUseCase: GetHeroUseCaseProtocol {
                     completion(.failure(HeroError.empty()))
                     return
                 }
+                // Apply the Mapper design pattern to transform an api dto to a domain model
                 let mapper = HeroDTOToHeroModelMapper()
                 let hero = mapper.map(decodedHero)
                 completion(.success(hero))
