@@ -4,9 +4,8 @@ enum HeroDetailState: Equatable {
     case loading
     case success(HeroModel)
     case like
-    // The flag represents two kind of errors: full screen and alerts
-    // Should I split them in two different states?
-    case error(firstCharge: Bool, String)
+    case fullScreenError(String) // For blocking errors
+    case inlineError(String) // For errors on ui, in this case im going to use it for an alert when the content is previous charged
 }
 
 protocol HeroDetailViewModelProtocol {
@@ -23,8 +22,8 @@ final class HeroDetailViewModel: HeroDetailViewModelProtocol {
     private let likeHeroUseCase: LikeHeroUseCase
     private var hero: HeroModel?
     
-    init(useCase: GetHeroUseCase, likeHeroUseCase: LikeHeroUseCase) {
-        self.getHeroUseCase = useCase
+    init(getHeroUseCase: GetHeroUseCase, likeHeroUseCase: LikeHeroUseCase) {
+        self.getHeroUseCase = getHeroUseCase
         self.likeHeroUseCase = likeHeroUseCase
     }
     
@@ -36,16 +35,16 @@ final class HeroDetailViewModel: HeroDetailViewModelProtocol {
                 self?.hero = hero
                 self?.onStateChanged.update(.success(hero))
             } catch let error as HeroError {
-                self?.onStateChanged.update(.error(firstCharge: true, error.reason))
+                self?.onStateChanged.update(.fullScreenError(error.reason))
             } catch {
-                self?.onStateChanged.update(.error(firstCharge: true, error.localizedDescription))
+                self?.onStateChanged.update(.fullScreenError(error.localizedDescription))
             }
         }
     }
     
     func likeHero() {
         guard let hero, !hero.favorite else {
-            onStateChanged.update(.error(firstCharge: false, "You have already liked this hero"))
+            onStateChanged.update(.inlineError("You have already liked this hero"))
             return
         }
         
@@ -54,7 +53,7 @@ final class HeroDetailViewModel: HeroDetailViewModelProtocol {
                 let _ = try result.get()
                 self?.onStateChanged.update(.like)
             } catch {
-                self?.onStateChanged.update(.error(firstCharge: false, "There was an error marking as liked"))
+                self?.onStateChanged.update(.inlineError("There was an error marking as liked"))
             }
         }
     }

@@ -16,8 +16,8 @@ final class HomeViewModel: HomeViewModelProtocol {
     let onStateChanged = Binding<HomeStates>()
     let getHerosUseCase: GetHerosUseCase
     
-    init(useCase: GetHerosUseCase) {
-        self.getHerosUseCase = useCase
+    init(getHeroUseCase: GetHerosUseCase) {
+        self.getHerosUseCase = getHeroUseCase
     }
     
     func loadHeros() {

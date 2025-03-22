@@ -5,8 +5,8 @@ final class HomeBuilder {
     /// - Returns: according to the Liskov principle returns an object of type `(UIViewController)`
     func build() -> UIViewController {
         let useCase = GetHerosUseCase()
-        let viewModel = HomeViewModel(useCase: useCase)
-        let controller = HomeViewController(viewModel: viewModel)
+        let viewModel = HomeViewModel(getHeroUseCase: useCase)
+        let controller = HomeViewController(homeViewModel: viewModel)
         controller.title = "Heros"
         return controller
     }

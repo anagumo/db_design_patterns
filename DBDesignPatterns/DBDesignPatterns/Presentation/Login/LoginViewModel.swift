@@ -4,7 +4,8 @@ import Foundation
 enum LoginState: Equatable {
     case loading
     case success
-    case error(LoginError)
+    case fullScreenError(String) // For blocking errors
+    case inlineError(RegexLintError) // For errors on ui ej. below text fields
 }
 
 protocol LoginViewModelProtocol {
@@ -30,8 +31,12 @@ final class LoginViewModel: LoginViewModelProtocol {
             switch result {
             case .success:
                 self?.onStateChanged.update(.success)
-            case .failure(let failure):
-                self?.onStateChanged.update(.error(failure))
+            case let .failure(failure):
+                guard let regexLintError = failure.regex else {
+                    self?.onStateChanged.update(.fullScreenError(failure.reason))
+                    return
+                }
+                self?.onStateChanged.update(.inlineError(regexLintError))
             }
         }
     }

@@ -6,18 +6,19 @@ class HeroDetailViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var contentStackView: UIStackView!
     @IBOutlet weak var errorStackView: UIStackView!
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var photoImageView: AsyncImage!
     
     // MARK: - View Model
     private let name: String
-    private let viewModel: HeroDetailViewModel
+    private let heroDetailViewModel: HeroDetailViewModel
     
     // MARK: - Lifecycle
     // name parameter is set in the init because is required to render this screen
-    init(name: String, viewModel: HeroDetailViewModel) {
+    init(name: String, heroDetailViewModel: HeroDetailViewModel) {
         self.name = name
-        self.viewModel = viewModel
+        self.heroDetailViewModel = heroDetailViewModel
         super.init(nibName: "HeroDetailView", bundle: Bundle(for: type(of: self)))
     }
     
@@ -29,23 +30,23 @@ class HeroDetailViewController: UIViewController {
         super.viewDidLoad()
         customizeUI()
         bind()
-        viewModel.loadHero(name: name)
+        heroDetailViewModel.loadHero(name: name)
     }
     
     // MARK: - UI Operations
     @IBAction func onTryAgainTapped(_ sender: UIButton) {
         Logger.debug.log("On try again button tapped")
-        viewModel.loadHero(name: name)
+        heroDetailViewModel.loadHero(name: name)
     }
     
     @objc func likeBarButtonItemTapped(_ sender: UIBarButtonItem) {
         Logger.debug.log("On like bar button item tapped")
-        viewModel.likeHero()
+        heroDetailViewModel.likeHero()
     }
     
     // MARK: - Binding
     private func bind() {
-        viewModel.onStateChanged.bind { [weak self] state in
+        heroDetailViewModel.onStateChanged.bind { [weak self] state in
             switch state {
             case .loading:
                 self?.renderLoading()
@@ -53,8 +54,10 @@ class HeroDetailViewController: UIViewController {
                 self?.renderSuccess(hero)
             case .like:
                 self?.renderLike()
-            case let .error(firstCharge, errorMessage):
-                self?.renderError(errorMessage, firstCharge)
+            case let .fullScreenError(message):
+                self?.renderFullScreenError(message)
+            case let .inlineError(message):
+                self?.renderInlineError(message)
             }
         }
     }
@@ -79,17 +82,17 @@ class HeroDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
     }
     
-    private func renderError(_ errorMessage: String, _ firstCharge: Bool) {
-        Logger.debug.error("\(errorMessage)")
-        if firstCharge {
-            activityIndicatorView.stopAnimating()
-            errorStackView.isHidden = false
-        } else {
-            present(
-                AlertBuilder().build(title: "Error", message: errorMessage),
-                animated: true
-            )
-        }
+    private func renderFullScreenError(_ message: String) {
+        activityIndicatorView.stopAnimating()
+        errorStackView.isHidden = false
+        errorLabel.text = message
+    }
+    
+    private func renderInlineError(_ message: String) {
+        present(
+            AlertBuilder().build(title: "Error", message: message),
+            animated: true
+        )
     }
 }
 

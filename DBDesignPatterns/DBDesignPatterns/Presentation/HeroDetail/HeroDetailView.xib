@@ -14,6 +14,7 @@
                 <outlet property="activityIndicatorView" destination="3wY-ZL-HvZ" id="94f-Iz-VtL"/>
                 <outlet property="contentStackView" destination="eQr-PD-ld8" id="Z1Z-CB-PTH"/>
                 <outlet property="descriptionLabel" destination="kvM-5f-j3X" id="2zZ-9E-e4v"/>
+                <outlet property="errorLabel" destination="omo-w6-dEq" id="R2p-Kh-ndR"/>
                 <outlet property="errorStackView" destination="2FL-vs-odI" id="mTr-I4-JLB"/>
                 <outlet property="photoImageView" destination="pG5-60-uc8" id="Eb8-Jr-yR4"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Mbs-CY-uZY"/>

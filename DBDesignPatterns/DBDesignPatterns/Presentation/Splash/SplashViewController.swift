@@ -6,11 +6,11 @@ final class SplashViewController: UIViewController {
     // MARK: - UI Components
     @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
     // MARK: - ViewModel
-    private let viewModel: SplashViewModel
+    private let splashViewModel: SplashViewModel
     
     // MARK: Lifecycle
-    init(viewModel: SplashViewModel) {
-        self.viewModel = viewModel
+    init(splashViewModel: SplashViewModel) {
+        self.splashViewModel = splashViewModel
         super.init(nibName: "SplashView", bundle: Bundle(for: type(of: self)))
     }
     
@@ -22,12 +22,12 @@ final class SplashViewController: UIViewController {
         super.viewDidLoad()
         //Call to subscribe to the view model events
         bind()
-        viewModel.load()
+        splashViewModel.load()
     }
     
     // MARK: Binding
     func bind() {
-        viewModel.onStateChange.bind { [weak self] state in
+        splashViewModel.onStateChange.bind { [weak self] state in
             switch state {
             case .loading:
                 self?.setAnimation(true)

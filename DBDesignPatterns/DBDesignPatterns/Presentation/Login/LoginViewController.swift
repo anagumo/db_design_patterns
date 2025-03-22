@@ -51,8 +51,10 @@ final class LoginViewController: UIViewController {
                 self?.renderLoading()
             case .success:
                 self?.renderSuccess()
-            case let .error(loginError):
-                self?.renderError(loginError)
+            case let .fullScreenError(message):
+                self?.renderFullScreenError(message)
+            case let .inlineError(regexLintError):
+                self?.renderInlineError(regexLintError)
             }
         }
     }
@@ -69,20 +71,21 @@ final class LoginViewController: UIViewController {
         navigationController?.setViewControllers([HomeBuilder().build()], animated: true)
     }
     
-    private func renderError(_ loginError: LoginError) {
-        Logger.debug.error("\(loginError.reason)")
+    private func renderFullScreenError(_ message: String) {
+        loginButton.configuration?.showsActivityIndicator = false
+        renderAlert(errorMessage: message)
+    }
+    
+    private func renderInlineError(_ regexLintError: RegexLintError) {
         loginButton.configuration?.showsActivityIndicator = false
         
-        switch loginError.regex {
+        switch regexLintError {
         case .email:
             usernameErrorLabel.isHidden = false
-            usernameErrorLabel.text = loginError.regex?.errorDescription
+            usernameErrorLabel.text = regexLintError.errorDescription
         case .password:
             passwordErrorLabel.isHidden = false
-            passwordErrorLabel.text = loginError.regex?.errorDescription
-        default:
-            // Display an alert when the error is not related to any text field
-            renderAlert(errorMessage: loginError.reason)
+            passwordErrorLabel.text = regexLintError.errorDescription
         }
     }
     

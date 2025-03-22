@@ -6,8 +6,8 @@ final class HeroDetailBuilder {
     func build(name: String) -> UIViewController {
         let useCase = GetHeroUseCase()
         let likeHero = LikeHeroUseCase()
-        let viewModel = HeroDetailViewModel(useCase: useCase, likeHeroUseCase: likeHero)
-        let controller = HeroDetailViewController(name: name, viewModel: viewModel)
+        let viewModel = HeroDetailViewModel(getHeroUseCase: useCase, likeHeroUseCase: likeHero)
+        let controller = HeroDetailViewController(name: name, heroDetailViewModel: viewModel)
         return controller
     }
 }

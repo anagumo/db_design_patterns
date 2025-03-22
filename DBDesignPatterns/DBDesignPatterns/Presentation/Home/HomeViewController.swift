@@ -18,11 +18,11 @@ final class HomeViewController: UIViewController {
     private var dataSource: DataSource?
     
     // MARK: - View Model
-    private let viewModel: HomeViewModel
+    private let homeViewModel: HomeViewModel
     
     // MARK: - Lifecycle
-    init(viewModel: HomeViewModel) {
-        self.viewModel = viewModel
+    init(homeViewModel: HomeViewModel) {
+        self.homeViewModel = homeViewModel
         super.init(nibName: "HomeView", bundle: Bundle(for: type(of: self)))
     }
     
@@ -34,7 +34,7 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         configureCollectionView()
         bind()
-        viewModel.loadHeros()
+        homeViewModel.loadHeros()
     }
     
     // MARK: Collection View Configuration
@@ -66,12 +66,12 @@ final class HomeViewController: UIViewController {
     // MARK: - UI Operations
     @IBAction func onTryAgainTapped(_ sender: UIButton) {
         Logger.debug.log("On try again tapped")
-        viewModel.loadHeros()
+        homeViewModel.loadHeros()
     }
     
     // MARK: - Binding
     private func bind() {
-        viewModel.onStateChanged.bind { [weak self] state in
+        homeViewModel.onStateChanged.bind { [weak self] state in
             switch state {
             case .loading:
                 self?.renderLoading()
