@@ -73,7 +73,11 @@ final class LoginViewController: UIViewController {
     
     private func renderFullScreenError(_ message: String) {
         loginButton.configuration?.showsActivityIndicator = false
-        renderAlert(errorMessage: message)
+        
+        present(
+            AlertBuilder().build(title: "Error", message: message),
+            animated: true
+        )
     }
     
     private func renderInlineError(_ regexLintError: RegexLintError) {
@@ -87,12 +91,5 @@ final class LoginViewController: UIViewController {
             passwordErrorLabel.isHidden = false
             passwordErrorLabel.text = regexLintError.errorDescription
         }
-    }
-    
-    private func renderAlert(errorMessage: String) {
-        present(
-            AlertBuilder().build(title: "Error", message: errorMessage),
-            animated: true
-        )
     }
 }
