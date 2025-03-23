@@ -11,8 +11,8 @@ extension HeroError {
     
     /// Describes an empty hero error
     /// - Returns: an object of type (`HeroError`) that encapsulate an error message
-    static func empty() -> HeroError {
-        HeroError(reason: "Empty hero")
+    static func notFound() -> HeroError {
+        HeroError(reason: "Hero not found")
     }
     
     /// Describes a network error in the api client

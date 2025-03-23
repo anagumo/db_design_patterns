@@ -18,10 +18,10 @@ enum MockAppData {
                   favorite: false,
                   photo: "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300"),
         HeroModel(identifier: "D13A40E5-4418-4223-9CE6-D2F9A28EBE95",
-                  name: "Gohan",
-                  description: "Sobran las presentaciones cuando se habla de Gohan.",
+                  name: "Vegeta",
+                  description: "Sobran las presentaciones cuando se habla de Vegeta.",
                   favorite: true,
-                  photo: "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/goku1.jpg?width=300"),
+                  photo: "https://cdn.alfabetajuega.com/alfabetajuega/2020/12/vegeta1.jpg?width=300"),
         HeroModel(identifier: "64143856-12D8-4EF9-9B6F-F08742098A18",
                   name: "Bulma",
                   description: "Sobran las presentaciones cuando se habla de Bulma.",
@@ -31,11 +31,11 @@ enum MockAppData {
                   name: "Piccolo",
                   description: "Sobran las presentaciones cuando se habla de Piccolo.",
                   favorite: true,
-                  photo: "https://cdn.alfabetajuega.com/alfabetajuega/2021/01/Bulma-Dragon-Ball.jpg?width=300"),
+                  photo: "https://cdn.alfabetajuega.com/alfabetajuega/2021/01/Piccolo.jpg?width=300"),
         HeroModel(identifier: "CBCFBDEC-F89B-41A1-AC0A-FBDA66A33A03",
-                  name: "Krillin",
-                  description: "Sobran las presentaciones cuando se habla de Krillin.",
+                  name: "Krilin",
+                  description: "Sobran las presentaciones cuando se habla de Krilin.",
                   favorite: false,
-                  photo: "https://cdn.alfabetajuega.com/alfabetajuega/2021/01/Bulma-Dragon-Ball.jpg?width=300")
+                  photo: "https://cdn.alfabetajuega.com/alfabetajuega/2021/01/Krilin.jpg?width=300")
     ]
 }

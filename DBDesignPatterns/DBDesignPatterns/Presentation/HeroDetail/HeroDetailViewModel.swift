@@ -18,11 +18,11 @@ protocol HeroDetailViewModelProtocol {
 
 final class HeroDetailViewModel: HeroDetailViewModelProtocol {
     let onStateChanged = Binding<HeroDetailState>()
-    private let getHeroUseCase: GetHeroUseCase
-    private let likeHeroUseCase: LikeHeroUseCase
+    private let getHeroUseCase: GetHeroUseCaseProtocol
+    private let likeHeroUseCase: LikeHeroUseCaseProtocol
     private var hero: HeroModel?
     
-    init(getHeroUseCase: GetHeroUseCase, likeHeroUseCase: LikeHeroUseCase) {
+    init(getHeroUseCase: GetHeroUseCaseProtocol, likeHeroUseCase: LikeHeroUseCaseProtocol) {
         self.getHeroUseCase = getHeroUseCase
         self.likeHeroUseCase = likeHeroUseCase
     }

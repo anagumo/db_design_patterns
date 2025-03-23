@@ -15,7 +15,7 @@ final class GetHeroUseCase: GetHeroUseCaseProtocol {
             do {
                 let decodedHero = try result.get().first
                 guard let decodedHero else {
-                    completion(.failure(HeroError.empty()))
+                    completion(.failure(HeroError.notFound()))
                     return
                 }
                 // Apply the Mapper design pattern to transform an api dto to a domain model
