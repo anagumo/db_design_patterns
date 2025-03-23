@@ -13,6 +13,7 @@ protocol HeroDetailViewModelProtocol {
     /// - Parameter name: an object of type `(String)` that represents the hero name ej. Gohan :'( (missing in the server)
     func loadHero(name: String)
     /// Implements a hero like, this endpoint not performs a hero unlike
+    var hero: HeroModel? { get set } // Exposed for testing purposes
     func likeHero()
 }
 
@@ -20,7 +21,7 @@ final class HeroDetailViewModel: HeroDetailViewModelProtocol {
     let onStateChanged = Binding<HeroDetailState>()
     private let getHeroUseCase: GetHeroUseCaseProtocol
     private let likeHeroUseCase: LikeHeroUseCaseProtocol
-    private var hero: HeroModel?
+    internal var hero: HeroModel?
     
     init(getHeroUseCase: GetHeroUseCaseProtocol, likeHeroUseCase: LikeHeroUseCaseProtocol) {
         self.getHeroUseCase = getHeroUseCase
@@ -52,8 +53,10 @@ final class HeroDetailViewModel: HeroDetailViewModelProtocol {
             do {
                 let _ = try result.get()
                 self?.onStateChanged.update(.like)
+            } catch let error as HeroError {
+                self?.onStateChanged.update(.inlineError(error.reason))
             } catch {
-                self?.onStateChanged.update(.inlineError("There was an error marking as liked"))
+                self?.onStateChanged.update(.inlineError(error.localizedDescription))
             }
         }
     }

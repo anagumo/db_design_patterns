@@ -38,4 +38,8 @@ enum MockAppData {
                   favorite: false,
                   photo: "https://cdn.alfabetajuega.com/alfabetajuega/2021/01/Krilin.jpg?width=300")
     ]
+    
+    static func givenHeroLikeData() -> Data? {
+        Data()
+    }
 }
