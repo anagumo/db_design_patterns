@@ -2,6 +2,11 @@
 
 This project implements some of the most common **Design Patterns** to solve specific things, in general uses a modified version of **Clean Architecture** (Uncle Bob) to separates concerns into indepenent layers, and uses **MVVM** design pattern for the **Presentation** layer.
 
+## Screen
+| Full App | Error Screen |
+|--------|--------|
+| <img src="Images/full_app.gif" width="250"/>  | <img src="Images/error_screen.png" width="250"/> |
+
 ## Project structure
 From innner to outer layers:
 
@@ -20,3 +25,7 @@ From innner to outer layers:
 - Infrastructure
 	- **Networking** to perform API calls and intercepts request using the **Interceptor** design pattern
 	- **Logging** to save a Logger xd
+
+## Testing
+
+<img src="Images/coverage.png" width="600"/>
