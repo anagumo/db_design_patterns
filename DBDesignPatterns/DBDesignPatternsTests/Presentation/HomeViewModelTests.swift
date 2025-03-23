@@ -2,14 +2,14 @@ import Foundation
 import XCTest
 @testable import DBDesignPatterns
 
-final class LoginViewModelTests: XCTestCase {
-    private var loginUseCaseMock: LoginUseCaseMock!
-    private var sut: LoginViewModelProtocol?
+final class HomeViewModelTests: XCTestCase {
+    private var getHerosUseCaseMock: GetHerosUseCaseMock!
+    private var sut: HomeViewModelProtocol?
     
     override func setUp() {
         super.setUp()
-        loginUseCaseMock = LoginUseCaseMock()
-        sut = LoginViewModel(loginUseCase: loginUseCaseMock)
+        getHerosUseCaseMock = GetHerosUseCaseMock()
+        sut = HomeViewModel(getHeroUseCase: getHerosUseCaseMock)
     }
     
     override func tearDown() {
@@ -17,31 +17,33 @@ final class LoginViewModelTests: XCTestCase {
         super.tearDown()
     }
     
-    // MARK: Login Success Cases
-    func test_when_usecase_state_is_success() {
+    // MARK: - Home Success Cases
+    func test_when_use_case_state_is_success() {
         // Given
-        loginUseCaseMock.receivedData = MockAppData.givenJWTData()
+        getHerosUseCaseMock.receivedData = MockAppData.givenHeroList
         let loadingExpectation = expectation(description: "View is loading")
         let successExpectation = expectation(description: "View has succeed")
         
         // When
         sut?.onStateChanged.bind(completion: { state in
-            if state == .loading {
+            switch state {
+            case .loading:
                 loadingExpectation.fulfill()
-            } else if state == .success {
+            case .success(let heroList):
+                XCTAssertEqual(heroList.count, 5)
                 successExpectation.fulfill()
+            default:break
             }
         })
-        sut?.login(username: "regularuser@keepcoding.es", password: "123456")
+        sut?.loadHeros()
         
         // Then
         wait(for: [loadingExpectation, successExpectation], timeout: 3)
     }
     
-    // MARK: Login Failure Cases
-    func test_when_usecase_state_is_regex_failure() {
+    // MARK: - Home Failure Cases
+    func test_when_use_case_state_is_failure() {
         // Given
-        loginUseCaseMock.receivedData = MockAppData.givenJWTData()
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
         
@@ -50,20 +52,22 @@ final class LoginViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case .inlineError(let regexLintError):
-                XCTAssertEqual(regexLintError, .email)
+            case let .error(message):
+                XCTAssertEqual(message, "Server error")
                 failureExpectation.fulfill()
-            default: break
+            default:break
             }
         })
-        sut?.login(username: "regularuser", password: "123456")
+        sut?.loadHeros()
         
         // Then
         wait(for: [loadingExpectation, failureExpectation], timeout: 3)
     }
     
-    func test_when_usecase_state_is_failure() {
+    // MARK: - Home Edge Cases
+    func test_when_usecase_state_is_empty() {
         // Given
+        getHerosUseCaseMock.receivedData = []
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
         
@@ -72,13 +76,13 @@ final class LoginViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case .fullScreenError(let message):
-                XCTAssertEqual(message, "Server error")
+            case let .error(message):
+                XCTAssertEqual(message, "Empty hero list")
                 failureExpectation.fulfill()
-            default: break
+            default:break
             }
         })
-        sut?.login(username: "regularuser@keepcoding.es", password: "123456")
+        sut?.loadHeros()
         
         // Then
         wait(for: [loadingExpectation, failureExpectation], timeout: 3)

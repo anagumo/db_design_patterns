@@ -9,7 +9,7 @@ final class LoginUseCaseMock: LoginUseCaseProtocol {
         do {
             let _ = try RegexLint.validate(data: username ?? "", matchWith: .email)
             
-            guard let _ =  receivedData else {
+            guard let receivedData else {
                 completion(.failure(LoginError.network("Server error")))
                 return
             }

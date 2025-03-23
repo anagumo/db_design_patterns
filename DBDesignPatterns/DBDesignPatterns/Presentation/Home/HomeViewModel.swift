@@ -8,15 +8,16 @@ enum HomeStates: Equatable {
 }
 
 protocol HomeViewModelProtocol {
+    var onStateChanged: Binding<HomeStates> { get }
     /// Implements a get hero list
     func loadHeros()
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
     let onStateChanged = Binding<HomeStates>()
-    let getHerosUseCase: GetHerosUseCase
+    let getHerosUseCase: GetHerosUseCaseProtocol
     
-    init(getHeroUseCase: GetHerosUseCase) {
+    init(getHeroUseCase: GetHerosUseCaseProtocol) {
         self.getHerosUseCase = getHeroUseCase
     }
     
