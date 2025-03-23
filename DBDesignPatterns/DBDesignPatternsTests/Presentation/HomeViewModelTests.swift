@@ -29,8 +29,7 @@ final class HomeViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case .success(let heroList):
-                XCTAssertEqual(heroList.count, 5)
+            case .ready:
                 successExpectation.fulfill()
             default:break
             }
@@ -38,6 +37,8 @@ final class HomeViewModelTests: XCTestCase {
         sut?.loadHeros()
         
         // Then
+        let herosCount = sut?.heros.count ?? .zero
+        XCTAssertEqual(herosCount, 5)
         wait(for: [loadingExpectation, successExpectation], timeout: 3)
     }
     

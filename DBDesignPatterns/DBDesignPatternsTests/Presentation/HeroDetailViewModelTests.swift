@@ -5,7 +5,7 @@ import XCTest
 final class HeroDetailViewModelTests: XCTestCase {
     private var getHeroUseCaseMock: GetHeroUseCaseMock!
     private var markHeroAsFavoriteUseCaseMock: MarkHeroAsFavoriteUseCaseMock!
-    private var sut: HeroDetailViewModel?
+    private var sut: HeroDetailViewModelProtocol?
     
     override func setUp() {
         getHeroUseCaseMock = GetHeroUseCaseMock()
@@ -24,7 +24,7 @@ final class HeroDetailViewModelTests: XCTestCase {
     // MARK: - Get Hero Success Cases
     func test_when_loadhero_usecase_state_is_success() {
         // Given
-        getHeroUseCaseMock.receivedData = MockAppData.givenHeroList
+        getHeroUseCaseMock.receivedDataResponse = MockAppData.givenHeroList
         let loadingExpectation = expectation(description: "View is loading")
         let successExpectation = expectation(description: "View has succeed")
         
@@ -33,8 +33,7 @@ final class HeroDetailViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case let .success(heroModel):
-                XCTAssertTrue(!heroModel.name.isEmpty)
+            case .ready:
                 successExpectation.fulfill()
             default:break
             }
@@ -42,12 +41,14 @@ final class HeroDetailViewModelTests: XCTestCase {
         sut?.loadHero(name: "Piccolo")
         
         // Then
+        let heroName = sut?.hero?.name ?? ""
+        XCTAssertTrue(!heroName.isEmpty)
         wait(for: [loadingExpectation, successExpectation], timeout: 3)
     }
     
     // MARK: - Get Hero Failure Cases
     func test_when_loadhero_usecase_is_hero_not_found_error() {
-        getHeroUseCaseMock.receivedData = MockAppData.givenHeroList
+        getHeroUseCaseMock.receivedDataResponse = MockAppData.givenHeroList
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
         
@@ -92,7 +93,7 @@ final class HeroDetailViewModelTests: XCTestCase {
     // MARK: - Mark As Favorite Success Cases
     func test_when_markasfavorite_usecase_state_is_favorite() {
         // Given
-        sut?.hero = MockAppData.givenHeroList.filter { $0.name == "Goku" }.first
+        let heroResponse = MockAppData.givenHeroList.filter { $0.name == "Goku" }.first
         markHeroAsFavoriteUseCaseMock.receivedResponseData = MockAppData.givenHeroLikeData()
         let successExpectation = expectation(description: "View has succeed")
         
@@ -102,7 +103,10 @@ final class HeroDetailViewModelTests: XCTestCase {
                 successExpectation.fulfill()
             }
         })
-        sut?.markHeroAsFavorite()
+        sut?.markHeroAsFavorite(
+            heroResponse?.identifier ?? "",
+            currentFavorite: heroResponse?.favorite ?? false
+        )
         
         // Then
         wait(for: [successExpectation], timeout: 3)
@@ -111,7 +115,7 @@ final class HeroDetailViewModelTests: XCTestCase {
     // MARK: - Mark As Favorite Failure Cases
     func test_when_markasfavorite_usecase_state_is_favorite_error() {
         // Given
-        sut?.hero = MockAppData.givenHeroList.filter { $0.name == "Piccolo" }.first
+        let heroResponse = MockAppData.givenHeroList.filter { $0.name == "Piccolo" }.first
         let failureExpectation = expectation(description: "View has failed")
         
         // When
@@ -123,7 +127,10 @@ final class HeroDetailViewModelTests: XCTestCase {
             default:break
             }
         })
-        sut?.markHeroAsFavorite()
+        sut?.markHeroAsFavorite(
+            heroResponse?.identifier ?? "",
+            currentFavorite: heroResponse?.favorite ?? false
+        )
         
         // Then
         wait(for: [failureExpectation], timeout: 3)
@@ -131,7 +138,7 @@ final class HeroDetailViewModelTests: XCTestCase {
     
     func test_when_markasfavorite_usecase_state_is_error() {
         // Given
-        sut?.hero = MockAppData.givenHeroList.filter { $0.name == "Goku" }.first
+        let heroResponse = MockAppData.givenHeroList.filter { $0.name == "Goku" }.first
         let failureExpectation = expectation(description: "View has failed")
         
         // When
@@ -143,7 +150,10 @@ final class HeroDetailViewModelTests: XCTestCase {
             default:break
             }
         })
-        sut?.markHeroAsFavorite()
+        sut?.markHeroAsFavorite(
+            heroResponse?.identifier ?? "",
+            currentFavorite: heroResponse?.favorite ?? false
+        )
         
         // Then
         wait(for: [failureExpectation], timeout: 3)

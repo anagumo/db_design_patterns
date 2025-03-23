@@ -12,11 +12,11 @@ class HeroDetailViewController: UIViewController {
     
     // MARK: - View Model
     private let name: String
-    private let heroDetailViewModel: HeroDetailViewModel
+    private let heroDetailViewModel: HeroDetailViewModelProtocol
     
     // MARK: - Lifecycle
     // name parameter is set in the init because is required to render this screen
-    init(name: String, heroDetailViewModel: HeroDetailViewModel) {
+    init(name: String, heroDetailViewModel: HeroDetailViewModelProtocol) {
         self.name = name
         self.heroDetailViewModel = heroDetailViewModel
         super.init(nibName: "HeroDetailView", bundle: Bundle(for: type(of: self)))
@@ -35,13 +35,18 @@ class HeroDetailViewController: UIViewController {
     
     // MARK: - UI Operations
     @IBAction func onTryAgainTapped(_ sender: UIButton) {
-        Logger.debug.log("On try again button tapped")
         heroDetailViewModel.loadHero(name: name)
     }
     
     @objc func likeBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        Logger.debug.log("On like bar button item tapped")
-        heroDetailViewModel.markHeroAsFavorite()
+        guard let hero = heroDetailViewModel.hero else {
+            Logger.debug.error("Hero not found in view model")
+            return
+        }
+        heroDetailViewModel.markHeroAsFavorite(
+            hero.identifier,
+            currentFavorite: hero.favorite
+        )
     }
     
     // MARK: - Binding
@@ -50,8 +55,8 @@ class HeroDetailViewController: UIViewController {
             switch state {
             case .loading:
                 self?.renderLoading()
-            case let .success(hero):
-                self?.renderSuccess(hero)
+            case .ready:
+                self?.renderReady()
             case .favorite:
                 self?.renderFavorite()
             case let .fullScreenError(message):
@@ -69,7 +74,11 @@ class HeroDetailViewController: UIViewController {
         errorStackView.isHidden = true
     }
     
-    private func renderSuccess(_ hero: HeroModel) {
+    private func renderReady() {
+        guard let hero = heroDetailViewModel.hero else {
+            Logger.debug.error("Hero not found in view model")
+            return
+        }
         activityIndicatorView.stopAnimating()
         contentStackView.isHidden = false
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: hero.getFavoriteImage())
@@ -83,12 +92,14 @@ class HeroDetailViewController: UIViewController {
     }
     
     private func renderFullScreenError(_ message: String) {
+        Logger.debug.error("\(message)")
         activityIndicatorView.stopAnimating()
         errorStackView.isHidden = false
         errorLabel.text = message
     }
     
     private func renderInlineError(_ message: String) {
+        Logger.debug.error("\(message)")
         present(
             AlertBuilder().build(title: "Error", message: message),
             animated: true

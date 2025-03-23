@@ -28,7 +28,7 @@ final class LoginViewModelTests: XCTestCase {
         sut?.onStateChanged.bind(completion: { state in
             if state == .loading {
                 loadingExpectation.fulfill()
-            } else if state == .success {
+            } else if state == .ready {
                 successExpectation.fulfill()
             }
         })

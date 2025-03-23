@@ -10,10 +10,10 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     
     // MARK: - View Model
-    private let loginViewModel: LoginViewModel
+    private let loginViewModel: LoginViewModelProtocol
     
     // MARK: Lifecycle
-    init(loginViewModel: LoginViewModel) {
+    init(loginViewModel: LoginViewModelProtocol) {
         self.loginViewModel = loginViewModel
         super.init(nibName: "LoginView", bundle: Bundle(for: type(of: self)))
     }
@@ -35,7 +35,6 @@ final class LoginViewController: UIViewController {
     }
     
     @IBAction func onLoginButtonTapped(_ sender: UIButton) {
-        Logger.debug.log("On login button tapped")
         loginViewModel.login(
             username: usernameTexField.text,
             password: passwordTextField.text
@@ -49,8 +48,8 @@ final class LoginViewController: UIViewController {
             switch state {
             case .loading:
                 self?.renderLoading()
-            case .success:
-                self?.renderSuccess()
+            case .ready:
+                self?.renderReady()
             case let .fullScreenError(message):
                 self?.renderFullScreenError(message)
             case let .inlineError(regexLintError):
@@ -66,12 +65,13 @@ final class LoginViewController: UIViewController {
         passwordErrorLabel.isHidden = true
     }
     
-    private func renderSuccess() {
+    private func renderReady() {
         loginButton.configuration?.showsActivityIndicator = false
         navigationController?.setViewControllers([HomeBuilder().build()], animated: true)
     }
     
     private func renderFullScreenError(_ message: String) {
+        Logger.debug.error("\(message)")
         loginButton.configuration?.showsActivityIndicator = false
         
         present(
@@ -81,6 +81,8 @@ final class LoginViewController: UIViewController {
     }
     
     private func renderInlineError(_ regexLintError: RegexLintError) {
+        let errorMessage = regexLintError.errorDescription ?? ""
+        Logger.debug.error("\(errorMessage)")
         loginButton.configuration?.showsActivityIndicator = false
         
         switch regexLintError {

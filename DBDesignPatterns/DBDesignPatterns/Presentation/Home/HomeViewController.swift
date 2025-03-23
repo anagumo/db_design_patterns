@@ -18,10 +18,10 @@ final class HomeViewController: UIViewController {
     private var dataSource: DataSource?
     
     // MARK: - View Model
-    private let homeViewModel: HomeViewModel
+    private let homeViewModel: HomeViewModelProtocol
     
     // MARK: - Lifecycle
-    init(homeViewModel: HomeViewModel) {
+    init(homeViewModel: HomeViewModelProtocol) {
         self.homeViewModel = homeViewModel
         super.init(nibName: "HomeView", bundle: Bundle(for: type(of: self)))
     }
@@ -65,7 +65,6 @@ final class HomeViewController: UIViewController {
     
     // MARK: - UI Operations
     @IBAction func onTryAgainTapped(_ sender: UIButton) {
-        Logger.debug.log("On try again tapped")
         homeViewModel.loadHeros()
     }
     
@@ -75,8 +74,8 @@ final class HomeViewController: UIViewController {
             switch state {
             case .loading:
                 self?.renderLoading()
-            case let .success(heros):
-                self?.renderSuccess(heros)
+            case .ready:
+                self?.renderReady()
             case let .error(message):
                 self?.renderError(message)
             }
@@ -89,11 +88,10 @@ final class HomeViewController: UIViewController {
         errorStackView.isHidden = true
     }
     
-    private func renderSuccess(_ heros: [HeroModel]) {
-        Logger.debug.log("Heros list has \(heros.count) items")
+    private func renderReady() {
         activityIndicatorView.stopAnimating()
         collectionView.isHidden = false
-        applySnapshot(heros: heros)
+        applySnapshot(heros: homeViewModel.heros)
     }
     
     private func renderError(_ message: String) {
@@ -116,10 +114,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let hero = dataSource?.itemIdentifier(for: indexPath) else {
+        /* Should I use also de DS?
+         guard let hero = dataSource?.itemIdentifier(for: indexPath) else {
             Logger.debug.error("Hero for \(indexPath) index path not found")
             return
         }
+         */
+        let hero = homeViewModel.heros[indexPath.row]
         // Show the screen without interacting with the view model since it does not require data
         // Also, according to the Single Responsaility principle the GET hero is going to be performed on Hero Detail
         show(HeroDetailBuilder().build(name: hero.name), sender: self)

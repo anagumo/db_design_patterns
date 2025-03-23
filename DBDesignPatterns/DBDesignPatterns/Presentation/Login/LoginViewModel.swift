@@ -3,7 +3,7 @@ import Foundation
 /// Represents a state on the screen
 enum LoginState: Equatable {
     case loading
-    case success
+    case ready
     case fullScreenError(String) // For blocking errors
     case inlineError(RegexLintError) // For errors on ui ej. below text fields
 }
@@ -32,7 +32,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         loginUseCase.run(username: username, password: password) { [weak self] result in
             switch result {
             case .success:
-                self?.onStateChanged.update(.success)
+                self?.onStateChanged.update(.ready)
             case let .failure(failure):
                 guard let regexLintError = failure.regex else {
                     self?.onStateChanged.update(.fullScreenError(failure.reason))
