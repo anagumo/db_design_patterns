@@ -8,7 +8,9 @@ enum LoginState: Equatable {
     case inlineError(RegexLintError) // For errors on ui ej. below text fields
 }
 
+// Dependency inversion to test the view model
 protocol LoginViewModelProtocol {
+    var onStateChanged: Binding<LoginState> { get }
     /// Implements a user authentication
     /// - Parameters:
     ///   - username: an object of type `(String)` that represents the email of the user
@@ -19,9 +21,9 @@ protocol LoginViewModelProtocol {
 final class LoginViewModel: LoginViewModelProtocol {
     // Represents a bridge between view model and ui to notify events
     let onStateChanged = Binding<LoginState>()
-    private let loginUseCase: LoginUseCase
+    private let loginUseCase: LoginUseCaseProtocol
     
-    init(loginUseCase: LoginUseCase) {
+    init(loginUseCase: LoginUseCaseProtocol) {
         self.loginUseCase = loginUseCase
     }
     
