@@ -2,14 +2,14 @@ import Foundation
 @testable import DBDesignPatterns
 
 final class LoginUseCaseMock: LoginUseCaseProtocol {
-    var receivedData: Data?
+    var receivedResponseData: Data?
     
     func run(username: String?, password: String?, completion: @escaping (Result<Void, LoginError>) -> Void) {
         
         do {
             let _ = try RegexLint.validate(data: username ?? "", matchWith: .email)
             
-            guard let receivedData else {
+            guard receivedResponseData != nil else {
                 completion(.failure(LoginError.network("Server error")))
                 return
             }

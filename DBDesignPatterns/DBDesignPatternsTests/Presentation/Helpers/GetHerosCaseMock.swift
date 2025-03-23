@@ -2,19 +2,19 @@ import Foundation
 @testable import DBDesignPatterns
 
 final class GetHerosUseCaseMock: GetHerosUseCaseProtocol {
-    var receivedData: [HeroModel]?
+    var receivedResponseData: [HeroModel]?
     
     func run(completion: @escaping (Result<[HeroModel],Error>) -> Void) {
-        guard let receivedData else {
+        guard let receivedResponseData else {
             completion(.failure(HeroError.network("Server error")))
             return
         }
         
-        guard !receivedData.isEmpty else {
+        guard !receivedResponseData.isEmpty else {
             completion(.failure(HeroError.emptyList()))
             return
         }
         
-        completion(.success(receivedData))
+        completion(.success(receivedResponseData))
     }
 }

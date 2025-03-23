@@ -46,7 +46,7 @@ final class HeroDetailViewModelTests: XCTestCase {
     }
     
     // MARK: - Get Hero Failure Cases
-    func test_when_loadhero_usecase_is_heronotfound_error() {
+    func test_when_loadhero_usecase_is_hero_not_found_error() {
         getHeroUseCaseMock.receivedData = MockAppData.givenHeroList
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
@@ -109,7 +109,7 @@ final class HeroDetailViewModelTests: XCTestCase {
     }
     
     // MARK: - Mark As Favorite Failure Cases
-    func test_when_markasfavorite_usecase_state_is_already_liked_error() {
+    func test_when_markasfavorite_usecase_state_is_favorite_error() {
         // Given
         sut?.hero = MockAppData.givenHeroList.filter { $0.name == "Piccolo" }.first
         let failureExpectation = expectation(description: "View has failed")

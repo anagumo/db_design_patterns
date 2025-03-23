@@ -20,7 +20,7 @@ final class LoginViewModelTests: XCTestCase {
     // MARK: Login Success Cases
     func test_when_usecase_state_is_success() {
         // Given
-        loginUseCaseMock.receivedData = MockAppData.givenJWTData()
+        loginUseCaseMock.receivedResponseData = MockAppData.givenJWTData()
         let loadingExpectation = expectation(description: "View is loading")
         let successExpectation = expectation(description: "View has succeed")
         
@@ -39,9 +39,9 @@ final class LoginViewModelTests: XCTestCase {
     }
     
     // MARK: Login Failure Cases
-    func test_when_usecase_state_is_regex_failure() {
+    func test_when_usecase_state_is_regex_error() {
         // Given
-        loginUseCaseMock.receivedData = MockAppData.givenJWTData()
+        loginUseCaseMock.receivedResponseData = MockAppData.givenJWTData()
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
         
@@ -59,10 +59,10 @@ final class LoginViewModelTests: XCTestCase {
         sut?.login(username: "regularuser", password: "123456")
         
         // Then
-        wait(for: [loadingExpectation, failureExpectation], timeout: 3)
+        wait(for: [loadingExpectation, failureExpectation])
     }
     
-    func test_when_usecase_state_is_failure() {
+    func test_when_usecase_state_is_error() {
         // Given
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")

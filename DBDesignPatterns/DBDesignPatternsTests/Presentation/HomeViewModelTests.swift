@@ -18,9 +18,9 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     // MARK: - Home Success Cases
-    func test_when_use_case_state_is_success() {
+    func test_when_usecase_state_is_success() {
         // Given
-        getHerosUseCaseMock.receivedData = MockAppData.givenHeroList
+        getHerosUseCaseMock.receivedResponseData = MockAppData.givenHeroList
         let loadingExpectation = expectation(description: "View is loading")
         let successExpectation = expectation(description: "View has succeed")
         
@@ -42,7 +42,7 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     // MARK: - Home Failure Cases
-    func test_when_use_case_state_is_failure() {
+    func test_when_use_case_state_is_error() {
         // Given
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
@@ -65,9 +65,9 @@ final class HomeViewModelTests: XCTestCase {
     }
     
     // MARK: - Home Edge Cases
-    func test_when_usecase_state_is_empty() {
+    func test_when_usecase_state_is_emptylist_error() {
         // Given
-        getHerosUseCaseMock.receivedData = []
+        getHerosUseCaseMock.receivedResponseData = []
         let loadingExpectation = expectation(description: "View is loading")
         let failureExpectation = expectation(description: "View has failed")
         
