@@ -41,7 +41,7 @@ class HeroDetailViewController: UIViewController {
     
     @objc func likeBarButtonItemTapped(_ sender: UIBarButtonItem) {
         Logger.debug.log("On like bar button item tapped")
-        heroDetailViewModel.likeHero()
+        heroDetailViewModel.markHeroAsFavorite()
     }
     
     // MARK: - Binding
@@ -52,8 +52,8 @@ class HeroDetailViewController: UIViewController {
                 self?.renderLoading()
             case let .success(hero):
                 self?.renderSuccess(hero)
-            case .like:
-                self?.renderLike()
+            case .favorite:
+                self?.renderFavorite()
             case let .fullScreenError(message):
                 self?.renderFullScreenError(message)
             case let .inlineError(message):
@@ -78,7 +78,7 @@ class HeroDetailViewController: UIViewController {
         descriptionLabel.text = hero.description
     }
     
-    private func renderLike() {
+    private func renderFavorite() {
         navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
     }
     

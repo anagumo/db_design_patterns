@@ -4,15 +4,15 @@ import XCTest
 
 final class HeroDetailViewModelTests: XCTestCase {
     private var getHeroUseCaseMock: GetHeroUseCaseMock!
-    private var likeHeroUseCaseMock: MarkHeroAsFavoriteUseCaseMock!
+    private var markHeroAsFavoriteUseCaseMock: MarkHeroAsFavoriteUseCaseMock!
     private var sut: HeroDetailViewModel?
     
     override func setUp() {
         getHeroUseCaseMock = GetHeroUseCaseMock()
-        likeHeroUseCaseMock = MarkHeroAsFavoriteUseCaseMock()
+        markHeroAsFavoriteUseCaseMock = MarkHeroAsFavoriteUseCaseMock()
         sut = HeroDetailViewModel(
             getHeroUseCase: getHeroUseCaseMock,
-            likeHeroUseCase: likeHeroUseCaseMock
+            markHeroAsFavoriteUseCase: markHeroAsFavoriteUseCaseMock
         )
     }
     
@@ -93,16 +93,16 @@ final class HeroDetailViewModelTests: XCTestCase {
     func test_when_markasfavorite_usecase_state_is_favorite() {
         // Given
         sut?.hero = MockAppData.givenHeroList.filter { $0.name == "Goku" }.first
-        likeHeroUseCaseMock.receivedResponseData = MockAppData.givenHeroLikeData()
+        markHeroAsFavoriteUseCaseMock.receivedResponseData = MockAppData.givenHeroLikeData()
         let successExpectation = expectation(description: "View has succeed")
         
         // When
         sut?.onStateChanged.bind(completion: { state in
-            if state == .like {
+            if state == .favorite {
                 successExpectation.fulfill()
             }
         })
-        sut?.likeHero()
+        sut?.markHeroAsFavorite()
         
         // Then
         wait(for: [successExpectation], timeout: 3)
@@ -118,12 +118,12 @@ final class HeroDetailViewModelTests: XCTestCase {
         sut?.onStateChanged.bind(completion: { state in
             switch state {
             case let .inlineError(message):
-                XCTAssertEqual(message, "You have already liked this hero")
+                XCTAssertEqual(message, "You have already marked this hero as favorite")
                 failureExpectation.fulfill()
             default:break
             }
         })
-        sut?.likeHero()
+        sut?.markHeroAsFavorite()
         
         // Then
         wait(for: [failureExpectation], timeout: 3)
@@ -143,7 +143,7 @@ final class HeroDetailViewModelTests: XCTestCase {
             default:break
             }
         })
-        sut?.likeHero()
+        sut?.markHeroAsFavorite()
         
         // Then
         wait(for: [failureExpectation], timeout: 3)

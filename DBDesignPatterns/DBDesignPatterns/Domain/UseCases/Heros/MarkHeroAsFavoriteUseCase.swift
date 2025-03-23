@@ -1,6 +1,6 @@
 import Foundation
 
-protocol LikeHeroUseCaseProtocol {
+protocol MarkHeroAsFavoriteUseCaseProtocol {
     /// Runs a hero like
     /// - Parameters:
     ///   - identifier: an object of type `(String)` that represents the hero id
@@ -8,11 +8,11 @@ protocol LikeHeroUseCaseProtocol {
     func run(identifier: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-final class LikeHeroUseCase: LikeHeroUseCaseProtocol {
+final class MarkHeroAsFavoriteUseCase: MarkHeroAsFavoriteUseCaseProtocol {
     
     func run(identifier: String, completion: @escaping (Result<Void, Error>) -> Void) {
         
-        LikeHeroAPIRequest(identifier: identifier).perform { result in
+        MarkHeroAsFavoriteAPIRequest(identifier: identifier).perform { result in
             do {
                 let _ = try result.get()
                 completion(.success(()))

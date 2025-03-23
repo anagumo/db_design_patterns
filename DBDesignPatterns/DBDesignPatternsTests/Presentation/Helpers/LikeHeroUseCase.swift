@@ -1,7 +1,7 @@
 import Foundation
 @testable import DBDesignPatterns
 
-final class MarkHeroAsFavoriteUseCaseMock: LikeHeroUseCaseProtocol {
+final class MarkHeroAsFavoriteUseCaseMock: MarkHeroAsFavoriteUseCaseProtocol {
     var receivedResponseData: Data?
     
     func run(identifier: String, completion: @escaping (Result<Void, Error>) -> Void) {
